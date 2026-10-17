@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-slate-100 text-slate-900 antialiased selection:bg-yellow-500 selection:text-blue-950;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
