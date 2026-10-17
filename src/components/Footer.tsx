@@ -126,7 +126,19 @@ export default function Footer() {
         {/* Bottom Bar: Copyright & Creator Credit */}
         <div className="mt-12 flex flex-col items-center justify-between gap-2 border-t border-blue-900/70 pt-6 text-xs text-slate-400 sm:flex-row">
           <p>
-            © {year} {settings.org_name} <span className="mx-1.5 text-slate-600">·</span> <span className="text-slate-400">Crafted by Calvin</span>
+            © {year} {settings.org_name} <span className="mx-1.5 text-slate-600">·</span>{' '}
+            <span className="text-slate-400">
+              Crafted by{' '}
+              <a
+                href="https://www.instagram.com/vinn.shpa"
+                target="_blank"
+                rel="noreferrer"
+                className="font-semibold text-slate-300 hover:text-yellow-400 hover:underline transition-colors"
+                title="Instagram @vinn.shpa"
+              >
+                Calvin
+              </a>
+            </span>
           </p>
           <p className="text-slate-500">
             All rights reserved.
