@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /admin
 
-Sitemap: https://hpon-web.vercel.app/sitemap.xml
+Sitemap: https://haga-pendidikan-ono-niha.vercel.app/sitemap.xml
