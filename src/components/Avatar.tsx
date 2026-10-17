@@ -24,12 +24,17 @@ export default function Avatar({
     .join('')
     .toUpperCase() || 'P'
 
-  const getObjectPosition = (pos?: string): string => {
-    if (!pos) return '50% 20%'
-    if (pos === 'top') return '50% 20%'
+  const getObjectPosition = (pos?: string, imgUrl?: string | null): string => {
+    if (pos && pos !== 'top' && pos !== 'center' && pos !== 'bottom') {
+      return pos
+    }
+    if (imgUrl) {
+      const match = imgUrl.match(/#pos=(\d+)_(\d+)/)
+      if (match) return `${match[1]}% ${match[2]}%`
+    }
     if (pos === 'center') return '50% 50%'
     if (pos === 'bottom') return '50% 80%'
-    return pos
+    return '50% 20%'
   }
 
   if (url && !imgError) {
@@ -39,7 +44,7 @@ export default function Avatar({
         alt={cleanName}
         loading="lazy"
         onError={() => setImgError(true)}
-        style={{ objectPosition: getObjectPosition(position) }}
+        style={{ objectPosition: getObjectPosition(position, url) }}
         className={`${className} shrink-0 rounded-full object-cover ring-2 ring-yellow-500/50 shadow-xs`}
       />
     )

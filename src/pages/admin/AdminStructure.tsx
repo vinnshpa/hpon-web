@@ -6,6 +6,7 @@ import { btnDanger, btnGhost, btnPrimary, card, inputCls } from '../../lib/ui'
 import type { OrgPosition, OrgUnit } from '../../types'
 import Modal from '../../components/Modal'
 import Avatar from '../../components/Avatar'
+import PhotoPositionAdjuster from '../../components/PhotoPositionAdjuster'
 import RoleBadge from '../../components/RoleBadge'
 import Spinner from '../../components/Spinner'
 import ErrorBox from '../../components/ErrorBox'
@@ -37,6 +38,13 @@ function PositionModal({ unit, position, nextOrder, onClose, onSaved }: Position
   const [subtitle, setSubtitle] = useState(position?.subtitle ?? '')
   const [socialLink, setSocialLink] = useState(position?.social_link ?? '')
   const [photoUrl, setPhotoUrl] = useState(position?.photo_url ?? '')
+  const [photoPos, setPhotoPos] = useState<string>(() => {
+    if (position?.photo_url) {
+      const match = position.photo_url.match(/#pos=(\d+)_(\d+)/)
+      if (match) return `${match[1]}% ${match[2]}%`
+    }
+    return '50% 20%'
+  })
   const [file, setFile] = useState<File | null>(null)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -51,6 +59,15 @@ function PositionModal({ unit, position, nextOrder, onClose, onSaved }: Position
       if (file) {
         const uploadRes = await uploadFile('org-assets', file, 'officers')
         finalPhoto = uploadRes.url
+      }
+
+      // Gabungkan koordinat posisi ke URL foto agar tersimpan dan tampil presisi di seluruh web
+      if (finalPhoto) {
+        const cleanUrl = finalPhoto.replace(/#pos=\d+_\d+/, '')
+        const match = photoPos.match(/(\d+)%\s+(\d+)%/)
+        if (match) {
+          finalPhoto = `${cleanUrl}#pos=${match[1]}_${match[2]}`
+        }
       }
 
       const payload = {
@@ -147,7 +164,7 @@ function PositionModal({ unit, position, nextOrder, onClose, onSaved }: Position
           />
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-3">
           <label className="block text-xs font-semibold text-slate-700">
             Foto Resmi Pengurus
           </label>
@@ -155,17 +172,42 @@ function PositionModal({ unit, position, nextOrder, onClose, onSaved }: Position
             <Avatar
               name={personName}
               url={file ? URL.createObjectURL(file) : photoUrl}
-              className="h-16 w-16"
+              position={photoPos}
+              className="h-20 w-20 ring-2 ring-yellow-400 shadow-sm"
             />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                if (e.target.files?.[0]) setFile(e.target.files[0])
-              }}
-              className="text-xs text-slate-500 file:mr-2 file:rounded-md file:border-0 file:bg-blue-950 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-yellow-400 hover:file:bg-blue-900 cursor-pointer"
-            />
+            <div className="flex-1 space-y-1">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  if (e.target.files?.[0]) setFile(e.target.files[0])
+                }}
+                className="text-xs text-slate-500 file:mr-2 file:rounded-md file:border-0 file:bg-blue-950 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-yellow-400 hover:file:bg-blue-900 cursor-pointer"
+              />
+              {photoUrl && !file && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPhotoUrl('')
+                    setFile(null)
+                  }}
+                  className="text-[11px] text-red-600 hover:underline block pt-0.5"
+                >
+                  Hapus Foto Ini
+                </button>
+              )}
+            </div>
           </div>
+
+          {/* Kontrol Geser Foto 4 Arah (Atas, Bawah, Kiri, Kanan) */}
+          {(file || photoUrl) && (
+            <div className="pt-1">
+              <PhotoPositionAdjuster
+                value={photoPos}
+                onChange={setPhotoPos}
+              />
+            </div>
+          )}
         </div>
 
         <div className="flex justify-end gap-2 border-t border-slate-100 pt-4">
