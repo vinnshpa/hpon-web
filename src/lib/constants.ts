@@ -2,66 +2,66 @@ import type { SiteSettings } from '../types'
 
 export const DEFAULT_SETTINGS: SiteSettings = {
   id: 'main',
-  org_name: 'Himpunan Pemuda & Pelajar',
-  org_tagline: 'Wadah Kolaborasi, Kepemimpinan, dan Pengabdian',
+  org_name: 'Haga Pendidikan Ono Niha',
+  org_tagline: 'Wadah Kolaborasi, Pendidikan, dan Pengabdian Generasi Muda Ono Niha (Ya’ahowu)',
   cabinet_name: 'Kabinet Sinergi Progresif 2024–2025',
   about_text:
-    'Organisasi ini didirikan sebagai wadah persatuan, pengembangan potensi intelektual, kepemimpinan, dan pengabdian masyarakat bagi seluruh generasi muda.',
+    'Haga Pendidikan Ono Niha (HPON) didirikan sebagai wadah persatuan, pencerahan intelektual, dan pengabdian bagi generasi muda Ono Niha di berbagai wilayah Nusantara. Berpijak pada nilai luhur persaudaraan dan semangat Ya’ahowu, HPON berkomitmen memperjuangkan kemajuan pendidikan, kepemimpinan, dan kesejahteraan masyarakat.',
   vision:
-    'Terwujudnya organisasi yang berintegritas, unggul dalam keilmuan, mandiri, dan berkontribusi nyata bagi bangsa.',
+    'Terwujudnya generasi muda Ono Niha yang unggul dalam pendidikan, berkarakter luhur, berdaya saing global, dan berakar kuat pada nilai-nilai persaudaraan.',
   missions: [
-    'Mempererat tali persaudaraan dan solidaritas antar kader, pengurus, serta pembina.',
-    'Menyelenggarakan kegiatan kaderisasi, pelatihan kepemimpinan, dan penguatan intelektual.',
-    'Mendorong aksi sosial dan pengabdian nyata kepada masyarakat di berbagai wilayah.',
-    'Membangun kemitraan strategis dengan institusi pendidikan, pemerintah, dan swasta.',
+    'Memajukan akses dan kualitas pendidikan bagi pemuda dan pelajar Ono Niha di seluruh wilayah.',
+    'Menumbuhkembangkan jiwa kepemimpinan, integritas, dan solidaritas persaudaraan lintas generasi.',
+    'Menyelenggarakan program pengabdian masyarakat, aksi sosial, dan pelestarian nilai budaya luhur Nias.',
+    'Membangun sinergi dan jejaring kemitraan strategis dengan berbagai pemangku kepentingan di tingkat regional maupun nasional.',
   ],
   stats: [
-    { value: '1.000+', label: 'Kader & Alumni' },
+    { value: '1.000+', label: 'Kader & Pelajar' },
     { value: '25+', label: 'Program Kerja / Thn' },
     { value: '5', label: 'Wilayah Koordinasi' },
     { value: '2018', label: 'Tahun Berdiri' },
   ],
   pillars: [
     {
-      title: 'Pengembangan Karir & Akademik',
-      desc: 'Membuka akses pelatihan, beasiswa, dan peningkatan kapabilitas intelektual kader.',
+      title: 'Pendidikan & Beasiswa',
+      desc: 'Mendorong akses pendidikan tinggi, bimbingan belajar, dan beasiswa bagi putra-putri Nias.',
       icon: 'GraduationCap',
     },
     {
-      title: 'Pengabdian & Aksi Sosial',
-      desc: 'Bakti nyata untuk masyarakat, lingkungan, dan aksi tanggap kemanusiaan.',
+      title: 'Aksi Sosial & Budaya',
+      desc: 'Pengabdian nyata kepada masyarakat, aksi tanggap kemanusiaan, dan pelestarian budaya.',
       icon: 'HeartHandshake',
     },
     {
-      title: 'Jaringan & Kemitraan',
-      desc: 'Membangun relasi antarwilayah dan kolaborasi dengan berbagai pemangku kepentingan.',
+      title: 'Jejaring Nusantara',
+      desc: 'Menghubungkan kader dan mahasiswa di Medan-Aceh, Kepri-Batam, Sumbar, Jawa-Bali, hingga Manado.',
       icon: 'Globe',
     },
   ],
   leader_welcome: {
-    name: 'Ahmad Fauzi Pratama',
+    name: 'Ketua Umum BPH',
     title: 'Ketua Umum BPH',
     quote:
-      'Organisasi ini bukan sekadar wadah berkumpul, melainkan kawah candradimuka tempat kita menempa gagasan, mengasah kepemimpinan, dan menebar manfaat nyata bagi masyarakat.',
+      'Ya’ahowu! Haga Pendidikan Ono Niha hadir sebagai obor penerang dan rumah kebersamaan untuk menempa generasi penerus yang cerdas, berkarakter, dan berdaya guna bagi tanah kelahiran dan bangsa.',
     photo_url: '',
   },
   contact_info: {
     address: 'Jl. Pelajar Nusantara No. 12, Medan, Sumatera Utara',
-    email: 'sekretariat@organisasi.id',
+    email: 'sekretariat@hpon.org',
     whatsapp: '+6281234567890',
-    instagram: '@organisasi_official',
+    instagram: '@hpon_official',
     maps_embed_url:
       'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127418.59828859346!2d98.60341775!3d3.59519565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303131cc1c3eb2fd%3A0x23d431b8a690e8a!2sMedan%2C%20Kota%20Medan%2C%20Sumatera%20Utara!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid',
   },
   documents: [
     {
       title: 'Anggaran Dasar & Anggaran Rumah Tangga (AD/ART)',
-      desc: 'Pedoman pokok konstitusi dan tata kelola organisasi.',
+      desc: 'Pedoman pokok konstitusi dan tata kelola organisasi HPON.',
       file_url: '',
     },
     {
-      title: 'Buku Profil Organisasi (Company Profile)',
-      desc: 'Ringkasan sejarah, visi misi, dan program kerja utama.',
+      title: 'Buku Profil Organisasi (Company Profile HPON)',
+      desc: 'Ringkasan sejarah, visi misi, dan program kerja unggulan.',
       file_url: '',
     },
   ],

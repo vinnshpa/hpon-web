@@ -37,33 +37,48 @@ export default function Home() {
   const getPillarIcon = (name: string) => {
     switch (name?.toLowerCase()) {
       case 'graduationcap':
-        return <GraduationCap className="h-6 w-6 text-yellow-500" />
+        return <GraduationCap className="h-6 w-6 text-yellow-400" />
       case 'hearthandshake':
-        return <HeartHandshake className="h-6 w-6 text-yellow-500" />
+        return <HeartHandshake className="h-6 w-6 text-yellow-400" />
       case 'globe':
-        return <Globe className="h-6 w-6 text-yellow-500" />
+        return <Globe className="h-6 w-6 text-yellow-400" />
       default:
-        return <Sparkles className="h-6 w-6 text-yellow-500" />
+        return <Sparkles className="h-6 w-6 text-yellow-400" />
     }
   }
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-16">
-      {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-blue-950 via-slate-900 to-blue-900 text-white">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#eab308_1px,transparent_1px)] [background-size:20px_20px]" />
+      {/* 1. HERO SECTION DENGAN LOGO RESMI & ANIMASI */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-blue-950 via-slate-950 to-blue-900 text-white">
+        {/* Glow Effects */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-sky-500/10 blur-3xl pointer-events-none" />
+        <div className="absolute top-1/3 left-1/3 w-[350px] h-[350px] rounded-full bg-yellow-500/10 blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
         
-        <div className="relative mx-auto max-w-6xl px-4 py-20 sm:py-28 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full bg-yellow-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-yellow-400 ring-1 ring-yellow-500/30">
-            <Sparkles className="h-3.5 w-3.5" />
-            {settings.cabinet_name}
+        <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-20 sm:pt-20 sm:pb-28 text-center">
+          {/* Logo dengan animasi melayang lembut */}
+          <div className="mx-auto mb-6 flex justify-center">
+            <div className="relative animate-float">
+              <div className="absolute -inset-3 rounded-full bg-gradient-to-r from-sky-400 via-yellow-400 to-amber-500 opacity-40 blur-lg animate-pulse-glow" />
+              <img
+                src="/logo.png"
+                alt="Logo Haga Pendidikan Ono Niha"
+                className="relative h-28 w-28 sm:h-36 sm:w-36 rounded-full object-contain ring-4 ring-yellow-400 shadow-2xl bg-sky-200"
+              />
+            </div>
           </div>
 
-          <h1 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-6xl text-white">
+          <div className="inline-flex items-center gap-2 rounded-full bg-yellow-400/15 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-yellow-400 ring-1 ring-yellow-400/40 shadow-xs">
+            <Sparkles className="h-3.5 w-3.5" />
+            {settings.cabinet_name} — Ya’ahowu!
+          </div>
+
+          <h1 className="mt-6 text-3xl font-black tracking-tight sm:text-6xl text-white">
             {settings.org_name}
           </h1>
 
-          <p className="mx-auto mt-5 max-w-2xl text-base sm:text-xl text-slate-300 leading-relaxed font-normal">
+          <p className="mx-auto mt-4 max-w-2xl text-base sm:text-xl text-slate-200 leading-relaxed font-normal">
             {settings.org_tagline}
           </p>
 
@@ -74,24 +89,27 @@ export default function Home() {
             </Link>
             <Link
               to="/kegiatan"
-              className="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-blue-900/40 px-5 py-2.5 font-semibold text-slate-200 transition hover:border-yellow-500/50 hover:bg-blue-900/80 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-xl border border-sky-400/40 bg-blue-900/40 px-5 py-2.5 font-bold text-slate-200 transition-all duration-200 hover:border-yellow-400 hover:bg-blue-900/80 hover:text-white hover:-translate-y-0.5 active:translate-y-0"
             >
               Agenda & Kegiatan
             </Link>
           </div>
         </div>
 
-        {/* 2. STATISTIK UTAMA (KEY IMPACT NUMBERS) */}
+        {/* 2. STATISTIK UTAMA (KEY IMPACT METRICS) */}
         {settings.stats && settings.stats.length > 0 && (
-          <div className="border-t border-blue-900/60 bg-blue-950/80 backdrop-blur-xs py-8">
+          <div className="border-t border-blue-900/70 bg-blue-950/90 backdrop-blur-md py-8">
             <div className="mx-auto max-w-6xl px-4">
               <div className="grid grid-cols-2 gap-6 sm:grid-cols-4 text-center">
                 {settings.stats.map((st, i) => (
-                  <div key={i} className="space-y-1">
-                    <p className="text-3xl sm:text-4xl font-extrabold text-yellow-400">
+                  <div
+                    key={i}
+                    className="space-y-1 p-3 rounded-xl transition-all duration-300 hover:bg-blue-900/30 hover:scale-105"
+                  >
+                    <p className="text-3xl sm:text-4xl font-black text-yellow-400 drop-shadow-xs">
                       {st.value}
                     </p>
-                    <p className="text-xs sm:text-sm font-medium text-slate-300">
+                    <p className="text-xs sm:text-sm font-semibold text-slate-300">
                       {st.label}
                     </p>
                   </div>
@@ -106,27 +124,30 @@ export default function Home() {
       {settings.pillars && settings.pillars.length > 0 && (
         <section className="mx-auto max-w-6xl px-4">
           <div className="text-center max-w-2xl mx-auto mb-10">
-            <span className="text-xs font-bold uppercase tracking-wider text-yellow-600">
+            <span className="text-xs font-black uppercase tracking-widest text-sky-700 bg-sky-100 px-3 py-1 rounded-full">
               Pilar Gerakan
             </span>
-            <h2 className="mt-1 text-2xl sm:text-3xl font-extrabold text-slate-900">
+            <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold text-blue-950">
               Fokus & Misi Utama Organisasi
             </h2>
             <p className="mt-2 text-sm text-slate-600">
-              Menjalankan peran transformatif dalam pembinaan intelektual dan pengabdian masyarakat.
+              Menjalankan peran pencerahan intelektual, persaudaraan, dan pengabdian bagi generasi Ono Niha.
             </p>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-3">
             {settings.pillars.map((pillar, i) => (
-              <div key={i} className={`${card} p-6 border-t-4 border-yellow-500`}>
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-blue-950 shadow-xs">
+              <div
+                key={i}
+                className={`${card} p-7 border-t-4 border-yellow-400 hover:border-sky-500 hover:shadow-xl transition-all duration-300`}
+              >
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-950 shadow-md ring-2 ring-yellow-400/40">
                   {getPillarIcon(pillar.icon)}
                 </div>
                 <h3 className="text-lg font-bold text-slate-900 mb-2">
                   {pillar.title}
                 </h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-sm text-slate-600 leading-relaxed font-normal">
                   {pillar.desc}
                 </p>
               </div>
@@ -138,31 +159,31 @@ export default function Home() {
       {/* 4. SAMBUTAN KETUA UMUM */}
       {settings.leader_welcome?.quote && (
         <section className="mx-auto max-w-5xl px-4">
-          <div className="rounded-2xl border border-yellow-500/30 bg-gradient-to-br from-blue-950 via-slate-900 to-blue-900 p-8 sm:p-12 text-white shadow-xl relative overflow-hidden">
-            <Quote className="absolute right-4 bottom-4 h-36 w-36 text-white/5 pointer-events-none" />
+          <div className="rounded-3xl border border-yellow-400/40 bg-gradient-to-br from-blue-950 via-slate-950 to-blue-900 p-8 sm:p-12 text-white shadow-2xl relative overflow-hidden">
+            <Quote className="absolute right-4 bottom-4 h-40 w-40 text-white/5 pointer-events-none" />
 
             <div className="flex flex-col sm:flex-row items-center gap-8 relative z-10">
               <Avatar
                 name={settings.leader_welcome.name}
                 url={settings.leader_welcome.photo_url}
-                className="h-28 w-28 sm:h-36 sm:w-36 ring-4 ring-yellow-400/50 shadow-md"
+                className="h-28 w-28 sm:h-36 sm:w-36 ring-4 ring-yellow-400 shadow-xl"
               />
 
               <div className="flex-1 text-center sm:text-left space-y-3">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-yellow-500/20 px-3 py-1 text-xs font-bold text-yellow-400">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-yellow-400/20 px-3.5 py-1 text-xs font-black text-yellow-400 ring-1 ring-yellow-400/40">
                   <ShieldCheck className="h-3.5 w-3.5" />
                   Sambutan {settings.leader_welcome.title || 'Ketua Umum'}
                 </span>
 
-                <blockquote className="text-base sm:text-lg font-medium text-slate-200 italic leading-relaxed">
+                <blockquote className="text-base sm:text-lg font-medium text-slate-100 italic leading-relaxed">
                   "{settings.leader_welcome.quote}"
                 </blockquote>
 
                 <div className="pt-2">
-                  <p className="text-base font-bold text-white">
+                  <p className="text-base font-extrabold text-white">
                     {settings.leader_welcome.name}
                   </p>
-                  <p className="text-xs text-yellow-400 font-semibold">
+                  <p className="text-xs text-yellow-400 font-bold">
                     {settings.leader_welcome.title} — {settings.cabinet_name}
                   </p>
                 </div>
@@ -183,16 +204,16 @@ export default function Home() {
             <section>
               <div className="mb-6 flex items-end justify-between">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-yellow-600">
+                  <span className="text-xs font-black uppercase tracking-widest text-sky-700 bg-sky-100 px-3 py-1 rounded-full">
                     Dokumentasi & Agenda
                   </span>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                  <h2 className="mt-2 text-2xl sm:text-3xl font-extrabold text-blue-950">
                     Kegiatan Organisasi
                   </h2>
                 </div>
                 <Link
                   to="/kegiatan"
-                  className="inline-flex items-center gap-1 text-sm font-bold text-blue-950 hover:text-yellow-600 transition"
+                  className="inline-flex items-center gap-1 text-sm font-bold text-blue-950 hover:text-sky-600 transition"
                 >
                   Lihat Semua
                   <ArrowRight className="h-4 w-4" />
@@ -216,16 +237,16 @@ export default function Home() {
             <section>
               <div className="mb-6 flex items-end justify-between">
                 <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-yellow-600">
+                  <span className="text-xs font-black uppercase tracking-widest text-sky-700 bg-sky-100 px-3 py-1 rounded-full">
                     Warta & Informasi
                   </span>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                  <h2 className="mt-2 text-2xl sm:text-3xl font-extrabold text-blue-950">
                     Pengumuman Resmi
                   </h2>
                 </div>
                 <Link
                   to="/pengumuman"
-                  className="inline-flex items-center gap-1 text-sm font-bold text-blue-950 hover:text-yellow-600 transition"
+                  className="inline-flex items-center gap-1 text-sm font-bold text-blue-950 hover:text-sky-600 transition"
                 >
                   Lihat Semua
                   <ArrowRight className="h-4 w-4" />
@@ -241,22 +262,22 @@ export default function Home() {
                   {data.announcements.map((item) => (
                     <div
                       key={item.id}
-                      className={`${card} p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
-                        item.is_pinned ? 'border-l-4 border-yellow-500 bg-yellow-50/20' : ''
+                      className={`${card} p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all duration-200 hover:shadow-md ${
+                        item.is_pinned ? 'border-l-4 border-yellow-400 bg-yellow-50/30' : ''
                       }`}
                     >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2 text-xs text-slate-500">
                           {item.is_pinned && (
-                            <span className="rounded-full bg-yellow-500 px-2 py-0.5 text-[10px] font-bold text-blue-950">
+                            <span className="rounded-full bg-yellow-400 px-2.5 py-0.5 text-[10px] font-black text-blue-950">
                               Disematkan
                             </span>
                           )}
                           <span className="flex items-center gap-1">
-                            <Calendar className="h-3 w-3" />
+                            <Calendar className="h-3 w-3 text-sky-600" />
                             {formatDate(item.created_at || '')}
                           </span>
-                          <span className="rounded-sm bg-slate-100 px-1.5 py-0.5 text-slate-600 font-medium">
+                          <span className="rounded-sm bg-slate-100 px-2 py-0.5 text-slate-600 font-semibold">
                             {item.category || 'Warta'}
                           </span>
                         </div>
@@ -270,7 +291,7 @@ export default function Home() {
 
                       <Link
                         to="/pengumuman"
-                        className="shrink-0 text-xs font-bold text-blue-950 hover:text-yellow-600 flex items-center gap-1"
+                        className="shrink-0 text-xs font-bold text-blue-950 hover:text-sky-600 flex items-center gap-1 transition"
                       >
                         Baca Lengkap
                         <ArrowRight className="h-3 w-3" />
