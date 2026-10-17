@@ -82,3 +82,13 @@ export const formatDate = (dateStr: string) => {
     return dateStr
   }
 }
+
+export const formatInstagramUrl = (handleOrUrl?: string): string => {
+  if (!handleOrUrl) return '#'
+  const trimmed = handleOrUrl.trim()
+  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+    return trimmed
+  }
+  const clean = trimmed.replace(/^@/, '')
+  return `https://instagram.com/${clean}`
+}

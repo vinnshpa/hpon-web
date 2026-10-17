@@ -3,6 +3,7 @@ import { useSiteSettings } from '../context/SiteSettingsContext'
 import Logo from './Logo'
 import { MapPin, Mail, MessageCircle, Shield, Heart, Sparkles } from 'lucide-react'
 import { InstagramIcon } from './Icons'
+import { formatInstagramUrl } from '../lib/constants'
 
 export default function Footer() {
   const { settings } = useSiteSettings()
@@ -108,9 +109,14 @@ export default function Footer() {
               {settings.contact_info.instagram && (
                 <li className="flex items-center gap-2.5">
                   <InstagramIcon className="h-4 w-4 shrink-0 text-pink-400" />
-                  <span className="hover:text-yellow-400 transition">
+                  <a
+                    href={formatInstagramUrl(settings.contact_info.instagram)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-yellow-400 hover:underline transition"
+                  >
                     {settings.contact_info.instagram}
-                  </span>
+                  </a>
                 </li>
               )}
             </ul>

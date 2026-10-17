@@ -13,6 +13,7 @@ import {
   ExternalLink,
 } from 'lucide-react'
 import { InstagramIcon } from '../components/Icons'
+import { formatInstagramUrl } from '../lib/constants'
 
 /**
  * Konversi otomatis berbagai format URL Google Maps menjadi URL Embed yang valid untuk <iframe>.
@@ -160,9 +161,15 @@ export default function Contact() {
                       <span className="block text-xs font-bold uppercase text-slate-400">
                         Instagram Resmi
                       </span>
-                      <span className="font-medium text-slate-800">
+                      <a
+                        href={formatInstagramUrl(settings.contact_info.instagram)}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-medium text-slate-800 hover:text-sky-700 hover:underline transition inline-flex items-center gap-1.5"
+                      >
                         {settings.contact_info.instagram}
-                      </span>
+                        <ExternalLink className="h-3 w-3 text-slate-400" />
+                      </a>
                     </div>
                   </li>
                 )}
