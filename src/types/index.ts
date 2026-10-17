@@ -11,6 +11,7 @@ export interface SiteSettings {
   stats: { value: string; label: string }[]
   pillars: { title: string; desc: string; icon: string }[]
   leader_welcome: {
+    card_title?: string
     name: string
     title: string
     quote: string

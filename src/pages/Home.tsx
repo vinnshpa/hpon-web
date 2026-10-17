@@ -172,7 +172,7 @@ export default function Home() {
               <div className="flex-1 text-center sm:text-left space-y-3">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-yellow-400/20 px-3.5 py-1 text-xs font-black text-yellow-400 ring-1 ring-yellow-400/40">
                   <ShieldCheck className="h-3.5 w-3.5" />
-                  Sambutan {settings.leader_welcome.title || 'Ketua Umum'}
+                  {settings.leader_welcome?.card_title || 'Sambutan Ketua Umum'}
                 </span>
 
                 <blockquote className="text-base sm:text-lg font-medium text-slate-100 italic leading-relaxed">
@@ -184,7 +184,10 @@ export default function Home() {
                     {settings.leader_welcome.name}
                   </p>
                   <p className="text-xs text-yellow-400 font-bold">
-                    {settings.leader_welcome.title} — {settings.cabinet_name}
+                    {settings.leader_welcome.title}
+                    {settings.cabinet_name && (
+                      <span className="text-slate-300 font-normal"> · {settings.cabinet_name}</span>
+                    )}
                   </p>
                 </div>
               </div>

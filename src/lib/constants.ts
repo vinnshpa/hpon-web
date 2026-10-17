@@ -39,6 +39,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     },
   ],
   leader_welcome: {
+    card_title: 'Sambutan Ketua Umum',
     name: 'Ketua Umum BPH',
     title: 'Ketua Umum BPH',
     quote:

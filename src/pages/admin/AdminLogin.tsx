@@ -59,7 +59,7 @@ export default function AdminLogin() {
           </div>
           <h1 className="text-2xl font-extrabold text-blue-950">Portal Pengurus</h1>
           <p className="mt-1 text-xs text-slate-500 font-medium">
-            {settings.org_name} — {settings.cabinet_name}
+            {settings.org_name} · {settings.cabinet_name}
           </p>
         </div>
 

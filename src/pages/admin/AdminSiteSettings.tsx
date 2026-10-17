@@ -234,14 +234,14 @@ export default function AdminSiteSettings() {
       <div className={`${card} p-6 sm:p-8 space-y-5 border-t-4 border-yellow-500`}>
         <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
           <UserCheck className="h-5 w-5 text-yellow-600" />
-          <h3 className="font-bold text-slate-900 text-lg">Sambutan Ketua Umum (Tampil di Beranda)</h3>
+          <h3 className="font-bold text-slate-900 text-lg">Sambutan Pemimpin / Pembina (Tampil di Beranda)</h3>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-3">
           <div className="space-y-3 text-center sm:text-left">
-            <label className="block text-xs font-semibold text-slate-700">Foto Ketua Umum</label>
+            <label className="block text-xs font-semibold text-slate-700">Foto Tokoh</label>
             <Avatar
-              name={form.leader_welcome?.name || 'Ketua Umum'}
+              name={form.leader_welcome?.name || 'Tokoh'}
               url={leaderPhoto ? URL.createObjectURL(leaderPhoto) : (form.leader_welcome?.photo_url || null)}
               className="h-28 w-28 mx-auto sm:mx-0 ring-4 ring-yellow-400/50"
             />
@@ -256,9 +256,30 @@ export default function AdminSiteSettings() {
           </div>
 
           <div className="sm:col-span-2 space-y-4">
+            <div>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">
+                Judul Kartu / Label Sambutan (Badge Kuning)
+              </label>
+              <input
+                type="text"
+                placeholder="Contoh: Sambutan Ketua Umum / Sambutan Dewan Pembina"
+                value={form.leader_welcome?.card_title || ''}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    leader_welcome: { ...form.leader_welcome, card_title: e.target.value },
+                  })
+                }
+                className={inputCls}
+              />
+              <p className="mt-1 text-[11px] text-slate-400">
+                Teks label pada badge kuning di atas kartu (bisa diganti misalnya jadi "Sambutan Dewan Pembina" atau "Sambutan Ketua Umum").
+              </p>
+            </div>
+
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1">Nama Ketua Umum</label>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">Nama Tokoh / Pengurus</label>
                 <input
                   type="text"
                   value={form.leader_welcome?.name || ''}
