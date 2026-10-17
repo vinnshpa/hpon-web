@@ -125,17 +125,90 @@ export async function fetchContactMessages(): Promise<ContactMessage[]> {
   return (data ?? []) as ContactMessage[]
 }
 
-/** 6. Penyimpanan Berkas & Gambar (Storage) */
+/** 6. Penyimpanan Berkas & Gambar (Storage) & Kompresi Otomatis */
 export type Bucket = 'org-assets' | 'activity-photos'
+
+/**
+ * Otomatis mengompres dan me-resize resolusi foto di browser sebelum diunggah.
+ * Foto kamera HP (5MB - 15MB) akan otomatis dikecilkan menjadi ~150KB - 300KB
+ * tanpa kehilangan ketajaman visual, sehingga upload cepat dan web hemat kuota.
+ */
+export async function compressImage(
+  file: File,
+  maxWidth = 1600,
+  maxHeight = 1600,
+  quality = 0.82
+): Promise<File> {
+  // Hanya proses gambar (jangan proses berkas PDF atau SVG)
+  if (!file.type.startsWith('image/') || file.type.includes('svg')) {
+    return file
+  }
+
+  // Jika file sudah sangat ringan (< 350 KB), tidak perlu diproses lagi
+  if (file.size < 350 * 1024) {
+    return file
+  }
+
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      const img = new Image()
+      img.onload = () => {
+        let width = img.width
+        let height = img.height
+
+        // Skala proporsional jika resolusi melebihi batas wajar
+        if (width > maxWidth || height > maxHeight) {
+          const ratio = Math.min(maxWidth / width, maxHeight / height)
+          width = Math.round(width * ratio)
+          height = Math.round(height * ratio)
+        }
+
+        const canvas = document.createElement('canvas')
+        canvas.width = width
+        canvas.height = height
+
+        const ctx = canvas.getContext('2d')
+        if (!ctx) return resolve(file)
+
+        ctx.drawImage(img, 0, 0, width, height)
+
+        const mimeType = 'image/jpeg'
+        canvas.toBlob(
+          (blob) => {
+            if (!blob || blob.size >= file.size) {
+              return resolve(file)
+            }
+            const compressedFile = new File([blob], file.name.replace(/\.[^.]+$/, '.jpg'), {
+              type: mimeType,
+              lastModified: Date.now(),
+            })
+            resolve(compressedFile)
+          },
+          mimeType,
+          quality
+        )
+      }
+      img.onerror = () => resolve(file)
+      img.src = event.target?.result as string
+    }
+    reader.onerror = () => resolve(file)
+    reader.readAsDataURL(file)
+  })
+}
 
 export async function uploadFile(bucket: Bucket, file: File, folder: string) {
   if (!isSupabaseConfigured) throw new Error('Supabase belum diatur.')
-  const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
+  
+  // Otomatis kompres gambar sebelum kirim ke server
+  const fileToUpload = await compressImage(file)
+
+  const ext = fileToUpload.name.split('.').pop()?.toLowerCase() || 'jpg'
   const path = `${folder}/${crypto.randomUUID()}.${ext}`
 
-  const { error } = await supabase.storage.from(bucket).upload(path, file, {
+  const { error } = await supabase.storage.from(bucket).upload(path, fileToUpload, {
     cacheControl: '31536000',
-    contentType: file.type,
+    contentType: fileToUpload.type,
   })
 
   if (error) throw error
