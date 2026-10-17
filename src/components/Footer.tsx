@@ -118,11 +118,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar: Copyright & Creator Credit */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-blue-900/70 pt-6 text-xs text-slate-400 sm:flex-row">
-          <p>© {year} {settings.org_name}. All rights reserved.</p>
-
-          <p className="text-slate-400">
-            Developed by <span className="font-semibold text-slate-200 hover:text-yellow-400 transition-colors">Calvin Sahputra Buulolo</span>
+        <div className="mt-12 flex flex-col items-center justify-between gap-2 border-t border-blue-900/70 pt-6 text-xs text-slate-400 sm:flex-row">
+          <p>
+            © {year} {settings.org_name} <span className="mx-1.5 text-slate-600">·</span> <span className="text-slate-400">Crafted by Calvin</span>
+          </p>
+          <p className="text-slate-500">
+            All rights reserved.
           </p>
         </div>
       </div>
