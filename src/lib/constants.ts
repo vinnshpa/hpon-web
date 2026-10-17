@@ -3,38 +3,38 @@ import type { SiteSettings } from '../types'
 export const DEFAULT_SETTINGS: SiteSettings = {
   id: 'main',
   org_name: 'Haga Pendidikan Ono Niha',
-  org_tagline: 'Wadah Kolaborasi, Pendidikan, dan Pengabdian Generasi Muda Ono Niha (Ya’ahowu)',
+  org_tagline: 'Lembaga & Gerakan Sosial Perjuangan Pendidikan Generasi Muda Kepulauan Nias',
   cabinet_name: 'Kabinet Sinergi Progresif 2024–2025',
   about_text:
-    'Haga Pendidikan Ono Niha (HPON) didirikan sebagai wadah persatuan, pencerahan intelektual, dan pengabdian bagi generasi muda Ono Niha di berbagai wilayah Nusantara. Berpijak pada nilai luhur persaudaraan dan semangat Ya’ahowu, HPON berkomitmen memperjuangkan kemajuan pendidikan, kepemimpinan, dan kesejahteraan masyarakat.',
+    'Haga Pendidikan Ono Niha (HPON) adalah sebuah lembaga dan gerakan sosial perjuangan pendidikan yang didirikan pada tahun 2021 oleh aktivis pendidikan Joniwarsito Waruwu. Lembaga ini hadir untuk membantu serta mengawal generasi muda asal Kepulauan Nias (Ono Niha) agar memiliki akses, pendampingan, dan kesempatan yang setara untuk menempuh pendidikan tinggi di berbagai perguruan tinggi terbaik di Indonesia.',
   vision:
-    'Terwujudnya generasi muda Ono Niha yang unggul dalam pendidikan, berkarakter luhur, berdaya saing global, dan berakar kuat pada nilai-nilai persaudaraan.',
+    'Terwujudnya generasi muda Ono Niha yang berpendidikan tinggi, cerdas, berintegritas, dan siap menjadi penggerak kemajuan Kepulauan Nias serta bangsa Indonesia.',
   missions: [
-    'Memajukan akses dan kualitas pendidikan bagi pemuda dan pelajar Ono Niha di seluruh wilayah.',
-    'Menumbuhkembangkan jiwa kepemimpinan, integritas, dan solidaritas persaudaraan lintas generasi.',
-    'Menyelenggarakan program pengabdian masyarakat, aksi sosial, dan pelestarian nilai budaya luhur Nias.',
-    'Membangun sinergi dan jejaring kemitraan strategis dengan berbagai pemangku kepentingan di tingkat regional maupun nasional.',
+    'Sosialisasi Pendidikan: Aktif mendatangi sekolah-sekolah di wilayah Kepulauan Nias untuk memberikan edukasi mengenai jalur masuk PTN, UTBK-SNBT, hingga sekolah kedinasan.',
+    'Fasilitator & Pendampingan: Memfasilitasi pelajar Nias melalui program tryout berkala, serta membantu biaya akomodasi dan transportasi bagi pelajar terpilih yang mengikuti ujian masuk PTN di luar pulau.',
+    'Pengawalan di Tanah Rantau: Mengantar dan mendampingi mahasiswa baru asal Nias saat mulai menempuh perkuliahan di berbagai kota perantauan guna membantu masa transisi adaptasi mereka.',
+    'Membangun jejaring kolaborasi antardaerah (Medan-Aceh, Kepri-Batam, Sumbar, Jawa-Bali, dan Manado) untuk memperkokoh solidaritas sesama Ono Niha.',
   ],
   stats: [
-    { value: '1.000+', label: 'Kader & Pelajar' },
-    { value: '25+', label: 'Program Kerja / Thn' },
-    { value: '5', label: 'Wilayah Koordinasi' },
-    { value: '2018', label: 'Tahun Berdiri' },
+    { value: '2021', label: 'Tahun Didirikan' },
+    { value: '1.000+', label: 'Pelajar Terbina' },
+    { value: '5', label: 'Wilayah Pengawalan' },
+    { value: '100%', label: 'Gerakan Sosial' },
   ],
   pillars: [
     {
-      title: 'Pendidikan & Beasiswa',
-      desc: 'Mendorong akses pendidikan tinggi, bimbingan belajar, dan beasiswa bagi putra-putri Nias.',
+      title: 'Sosialisasi Pendidikan',
+      desc: 'Edukasi komprehensif ke sekolah-sekolah se-Nias mengenai jalur PTN, UTBK-SNBT, dan sekolah kedinasan.',
       icon: 'GraduationCap',
     },
     {
-      title: 'Aksi Sosial & Budaya',
-      desc: 'Pengabdian nyata kepada masyarakat, aksi tanggap kemanusiaan, dan pelestarian budaya.',
+      title: 'Fasilitator & Pendampingan',
+      desc: 'Penyelenggaraan tryout serta dukungan akomodasi dan transportasi seleksi masuk PTN di luar pulau.',
       icon: 'HeartHandshake',
     },
     {
-      title: 'Jejaring Nusantara',
-      desc: 'Menghubungkan kader dan mahasiswa di Medan-Aceh, Kepri-Batam, Sumbar, Jawa-Bali, hingga Manado.',
+      title: 'Pengawalan Tanah Rantau',
+      desc: 'Pendampingan langsung bagi mahasiswa baru asal Nias saat pertama kali tiba dan beradaptasi di kota kuliah.',
       icon: 'Globe',
     },
   ],
@@ -42,16 +42,16 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     name: 'Ketua Umum BPH',
     title: 'Ketua Umum BPH',
     quote:
-      'Ya’ahowu! Haga Pendidikan Ono Niha hadir sebagai obor penerang dan rumah kebersamaan untuk menempa generasi penerus yang cerdas, berkarakter, dan berdaya guna bagi tanah kelahiran dan bangsa.',
+      'Haga Pendidikan Ono Niha lahir dari komitmen suci bahwa tidak boleh ada putra-putri Nias yang terhenti cita-citanya meraih perguruan tinggi hanya karena keterbatasan informasi dan akses. Bersama kita kawal generasi Ono Niha menuju masa depan gilang-gemilang. Ya’ahowu!',
     photo_url: '',
   },
   contact_info: {
-    address: 'Jl. Pelajar Nusantara No. 12, Medan, Sumatera Utara',
+    address: 'Kepulauan Nias & Sekretariat Penghubung Medan, Sumatera Utara',
     email: 'sekretariat@hpon.org',
     whatsapp: '+6281234567890',
     instagram: '@hpon_official',
     maps_embed_url:
-      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127418.59828859346!2d98.60341775!3d3.59519565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303131cc1c3eb2fd%3A0x23d431b8a690e8a!2sMedan%2C%20Kota%20Medan%2C%20Sumatera%20Utara!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid',
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1020478.4357731773!2d97.02102860431873!3d1.082728271101912!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30282490b791fc51%3A0xe541c9693cfa3aa8!2sPulau%20Nias!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid',
   },
   documents: [
     {
@@ -60,8 +60,8 @@ export const DEFAULT_SETTINGS: SiteSettings = {
       file_url: '',
     },
     {
-      title: 'Buku Profil Organisasi (Company Profile HPON)',
-      desc: 'Ringkasan sejarah, visi misi, dan program kerja unggulan.',
+      title: 'Profil Gerakan & Panduan Beasiswa HPON',
+      desc: 'Buku panduan sosialisasi PTN, beasiswa, dan pendampingan rantau.',
       file_url: '',
     },
   ],

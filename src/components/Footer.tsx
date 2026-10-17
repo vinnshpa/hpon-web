@@ -118,15 +118,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar: Copyright & Creator Credit */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-blue-900/70 pt-6 text-xs text-slate-400 sm:flex-row">
-          <p>© {year} {settings.org_name}. Seluruh hak cipta dilindungi.</p>
+        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-blue-900/70 pt-6 text-xs text-slate-400 sm:flex-row">
+          <p>© {year} {settings.org_name}. All rights reserved.</p>
 
-          {/* Creator Credit Badge */}
-          <div className="flex items-center gap-1.5 rounded-full bg-blue-900/30 px-3.5 py-1.5 ring-1 ring-blue-800/60 shadow-xs">
-            <span>Didesain & Dikembangkan dengan</span>
-            <Heart className="h-3.5 w-3.5 text-rose-500 fill-rose-500 animate-pulse" />
-            <span>oleh <strong className="text-yellow-400 font-bold">Calvin Sahputra</strong></span>
-          </div>
+          <p className="text-slate-400">
+            Developed by <span className="font-semibold text-slate-200 hover:text-yellow-400 transition-colors">Calvin Sahputra Buulolo</span>
+          </p>
         </div>
       </div>
     </footer>
