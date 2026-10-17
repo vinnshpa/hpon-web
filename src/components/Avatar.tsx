@@ -4,9 +4,15 @@ interface AvatarProps {
   name?: string | null
   url?: string | null
   className?: string
+  position?: 'top' | 'center' | 'bottom' | string
 }
 
-export default function Avatar({ name, url, className = 'h-16 w-16' }: AvatarProps) {
+export default function Avatar({
+  name,
+  url,
+  className = 'h-16 w-16',
+  position = 'top',
+}: AvatarProps) {
   const [imgError, setImgError] = useState(false)
 
   const cleanName = name?.trim() || 'P'
@@ -18,6 +24,15 @@ export default function Avatar({ name, url, className = 'h-16 w-16' }: AvatarPro
     .join('')
     .toUpperCase() || 'P'
 
+  const posClass =
+    position === 'center'
+      ? 'object-center'
+      : position === 'bottom'
+      ? 'object-bottom'
+      : position === 'top'
+      ? 'object-[center_20%]'
+      : position
+
   if (url && !imgError) {
     return (
       <img
@@ -25,7 +40,7 @@ export default function Avatar({ name, url, className = 'h-16 w-16' }: AvatarPro
         alt={cleanName}
         loading="lazy"
         onError={() => setImgError(true)}
-        className={`${className} shrink-0 rounded-full object-cover ring-2 ring-yellow-500/50 shadow-xs`}
+        className={`${className} shrink-0 rounded-full object-cover ${posClass} ring-2 ring-yellow-500/50 shadow-xs`}
       />
     )
   }

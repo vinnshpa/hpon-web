@@ -166,6 +166,7 @@ export default function Home() {
               <Avatar
                 name={settings.leader_welcome.name}
                 url={settings.leader_welcome.photo_url}
+                position={settings.leader_welcome.photo_position || 'top'}
                 className="h-28 w-28 sm:h-36 sm:w-36 ring-4 ring-yellow-400 shadow-xl"
               />
 

@@ -45,6 +45,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     quote:
       'Haga Pendidikan Ono Niha lahir dari komitmen suci bahwa tidak boleh ada putra-putri Nias yang terhenti cita-citanya meraih perguruan tinggi hanya karena keterbatasan informasi dan akses. Bersama kita kawal generasi Ono Niha menuju masa depan gilang-gemilang.',
     photo_url: '',
+    photo_position: 'top',
   },
   contact_info: {
     address: 'Kepulauan Nias & Sekretariat Penghubung Medan, Sumatera Utara',

@@ -16,6 +16,7 @@ export interface SiteSettings {
     title: string
     quote: string
     photo_url: string
+    photo_position?: 'top' | 'center' | 'bottom'
   }
   contact_info: {
     address: string

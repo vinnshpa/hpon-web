@@ -243,6 +243,7 @@ export default function AdminSiteSettings() {
             <Avatar
               name={form.leader_welcome?.name || 'Tokoh'}
               url={leaderPhoto ? URL.createObjectURL(leaderPhoto) : (form.leader_welcome?.photo_url || null)}
+              position={form.leader_welcome?.photo_position || 'top'}
               className="h-28 w-28 mx-auto sm:mx-0 ring-4 ring-yellow-400/50"
             />
             <input
@@ -253,6 +254,42 @@ export default function AdminSiteSettings() {
               }}
               className="block w-full text-xs text-slate-500 file:mr-2 file:rounded-md file:border-0 file:bg-blue-950 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-yellow-400 hover:file:bg-blue-900 cursor-pointer"
             />
+
+            <div className="pt-1 text-left">
+              <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                Fokus Potongan Foto
+              </label>
+              <div className="grid grid-cols-3 gap-1 rounded-lg bg-slate-100 p-1 text-[11px]">
+                {(['top', 'center', 'bottom'] as const).map((pos) => {
+                  const isSelected = (form.leader_welcome?.photo_position || 'top') === pos
+                  return (
+                    <button
+                      key={pos}
+                      type="button"
+                      onClick={() =>
+                        setForm({
+                          ...form,
+                          leader_welcome: {
+                            ...form.leader_welcome,
+                            photo_position: pos,
+                          },
+                        })
+                      }
+                      className={`rounded-md py-1 font-semibold transition ${
+                        isSelected
+                          ? 'bg-blue-950 text-yellow-400 shadow-xs'
+                          : 'text-slate-600 hover:text-slate-900'
+                      }`}
+                    >
+                      {pos === 'top' ? 'Atas' : pos === 'center' ? 'Tengah' : 'Bawah'}
+                    </button>
+                  )
+                })}
+              </div>
+              <p className="mt-1 text-[10px] text-slate-400">
+                Pilih "Atas" agar kepala/wajah tidak terpotong.
+              </p>
+            </div>
           </div>
 
           <div className="sm:col-span-2 space-y-4">
