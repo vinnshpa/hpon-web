@@ -5,6 +5,7 @@ import { DEFAULT_SETTINGS } from '../../lib/constants'
 import { btnGhost, btnPrimary, card, inputCls } from '../../lib/ui'
 import ErrorBox from '../../components/ErrorBox'
 import Avatar from '../../components/Avatar'
+import PhotoPositionAdjuster from '../../components/PhotoPositionAdjuster'
 import {
   Save,
   CheckCircle2,
@@ -255,40 +256,19 @@ export default function AdminSiteSettings() {
               className="block w-full text-xs text-slate-500 file:mr-2 file:rounded-md file:border-0 file:bg-blue-950 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-yellow-400 hover:file:bg-blue-900 cursor-pointer"
             />
 
-            <div className="pt-1 text-left">
-              <label className="block text-[11px] font-semibold text-slate-600 mb-1">
-                Fokus Potongan Foto
-              </label>
-              <div className="grid grid-cols-3 gap-1 rounded-lg bg-slate-100 p-1 text-[11px]">
-                {(['top', 'center', 'bottom'] as const).map((pos) => {
-                  const isSelected = (form.leader_welcome?.photo_position || 'top') === pos
-                  return (
-                    <button
-                      key={pos}
-                      type="button"
-                      onClick={() =>
-                        setForm({
-                          ...form,
-                          leader_welcome: {
-                            ...form.leader_welcome,
-                            photo_position: pos,
-                          },
-                        })
-                      }
-                      className={`rounded-md py-1 font-semibold transition ${
-                        isSelected
-                          ? 'bg-blue-950 text-yellow-400 shadow-xs'
-                          : 'text-slate-600 hover:text-slate-900'
-                      }`}
-                    >
-                      {pos === 'top' ? 'Atas' : pos === 'center' ? 'Tengah' : 'Bawah'}
-                    </button>
-                  )
-                })}
-              </div>
-              <p className="mt-1 text-[10px] text-slate-400">
-                Pilih "Atas" agar kepala/wajah tidak terpotong.
-              </p>
+            <div className="pt-1">
+              <PhotoPositionAdjuster
+                value={form.leader_welcome?.photo_position || '50% 20%'}
+                onChange={(newPos) =>
+                  setForm({
+                    ...form,
+                    leader_welcome: {
+                      ...form.leader_welcome,
+                      photo_position: newPos,
+                    },
+                  })
+                }
+              />
             </div>
           </div>
 
