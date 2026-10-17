@@ -92,3 +92,44 @@ export const formatInstagramUrl = (handleOrUrl?: string): string => {
   const clean = trimmed.replace(/^@/, '')
   return `https://instagram.com/${clean}`
 }
+
+export interface ParsedSocialLink {
+  label: string
+  url: string
+}
+
+export const parseSocialLink = (raw?: string | null): ParsedSocialLink | null => {
+  if (!raw || !raw.trim()) return null
+  const trimmed = raw.trim()
+  if (trimmed.includes('|')) {
+    const [labelPart, ...urlParts] = trimmed.split('|')
+    const url = urlParts.join('|').trim()
+    if (url) {
+      return {
+        label: labelPart.trim() || 'Tautan Profil',
+        url: url.startsWith('http://') || url.startsWith('https://') ? url : `https://${url}`,
+      }
+    }
+  }
+
+  // Deteksi cerdas label jika hanya URL yang dimasukkan
+  let label = 'Tautan Profil'
+  if (trimmed.includes('instagram.com')) label = 'Instagram'
+  else if (trimmed.includes('linkedin.com')) label = 'LinkedIn'
+  else if (trimmed.includes('facebook.com')) label = 'Facebook'
+  else if (trimmed.includes('twitter.com') || trimmed.includes('x.com')) label = 'X / Twitter'
+  else if (trimmed.includes('wa.me')) label = 'WhatsApp'
+
+  return {
+    label,
+    url: trimmed.startsWith('http://') || trimmed.startsWith('https://') ? trimmed : `https://${trimmed}`,
+  }
+}
+
+export const formatSocialLinkPayload = (label?: string, url?: string): string | null => {
+  if (!url || !url.trim()) return null
+  const cleanUrl = url.trim()
+  const cleanLabel = label?.trim()
+  if (!cleanLabel) return cleanUrl
+  return `${cleanLabel} | ${cleanUrl}`
+}

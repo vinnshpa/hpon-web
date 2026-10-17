@@ -2,7 +2,8 @@ import type { OrgPosition, OrgUnit } from '../types'
 import Avatar from './Avatar'
 import RoleBadge from './RoleBadge'
 import { card } from '../lib/ui'
-import { Award, Compass, Layers, MapPin, ChevronDown } from 'lucide-react'
+import { Award, Compass, Layers, MapPin, ChevronDown, ExternalLink } from 'lucide-react'
+import { parseSocialLink } from '../lib/constants'
 
 interface OrgTreeProps {
   units: OrgUnit[]
@@ -83,16 +84,21 @@ export default function OrgTree({ units, positions }: OrgTreeProps) {
                 ) : (
                   <p className="mt-1 text-xs text-slate-400">Pembina Kehormatan</p>
                 )}
-                {pos.social_link && (
-                  <a
-                    href={pos.social_link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-3 inline-block text-xs font-medium text-blue-900 underline hover:text-yellow-600"
-                  >
-                    Profil / Kontak
-                  </a>
-                )}
+                {pos.social_link && (() => {
+                  const s = parseSocialLink(pos.social_link)
+                  if (!s) return null
+                  return (
+                    <a
+                      href={s.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-blue-950 hover:text-yellow-600 underline transition"
+                    >
+                      {s.label}
+                      <ExternalLink className="h-3 w-3 text-slate-400" />
+                    </a>
+                  )
+                })()}
               </div>
             )
           })}
@@ -139,16 +145,21 @@ export default function OrgTree({ units, positions }: OrgTreeProps) {
                 {pos.subtitle && (
                   <p className="mt-2 text-xs font-medium text-slate-600">{pos.subtitle}</p>
                 )}
-                {pos.social_link && (
-                  <a
-                    href={pos.social_link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mt-2 inline-block text-xs text-blue-800 hover:text-yellow-600 underline"
-                  >
-                    Tautan LinkedIn / Medsos
-                  </a>
-                )}
+                {pos.social_link && (() => {
+                  const s = parseSocialLink(pos.social_link)
+                  if (!s) return null
+                  return (
+                    <a
+                      href={s.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-blue-900 hover:text-yellow-600 underline transition"
+                    >
+                      {s.label}
+                      <ExternalLink className="h-3 w-3 text-slate-400" />
+                    </a>
+                  )
+                })()}
               </div>
             )
           })}

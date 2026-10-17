@@ -3,6 +3,7 @@ import { supabase } from '../../lib/supabase'
 import { fetchOrgStructure, uploadFile } from '../../lib/api'
 import { errMsg, useFetch } from '../../hooks/useFetch'
 import { btnDanger, btnGhost, btnPrimary, card, inputCls } from '../../lib/ui'
+import { parseSocialLink, formatSocialLinkPayload } from '../../lib/constants'
 import type { OrgPosition, OrgUnit } from '../../types'
 import Modal from '../../components/Modal'
 import Avatar from '../../components/Avatar'
@@ -36,7 +37,9 @@ function PositionModal({ unit, position, nextOrder, onClose, onSaved }: Position
   const [title, setTitle] = useState(position?.title ?? '')
   const [personName, setPersonName] = useState(position?.person_name ?? '')
   const [subtitle, setSubtitle] = useState(position?.subtitle ?? '')
-  const [socialLink, setSocialLink] = useState(position?.social_link ?? '')
+  const parsedSocial = parseSocialLink(position?.social_link)
+  const [socialLabel, setSocialLabel] = useState(parsedSocial?.label ?? '')
+  const [socialUrl, setSocialUrl] = useState(parsedSocial?.url ?? '')
   const [photoUrl, setPhotoUrl] = useState(position?.photo_url ?? '')
   const [photoPos, setPhotoPos] = useState<string>(() => {
     if (position?.photo_url) {
@@ -70,12 +73,14 @@ function PositionModal({ unit, position, nextOrder, onClose, onSaved }: Position
         }
       }
 
+      const finalSocial = formatSocialLinkPayload(socialLabel, socialUrl)
+
       const payload = {
         unit_id: unit.id,
         title: title.trim(),
         person_name: personName.trim() || null,
         subtitle: subtitle.trim() || null,
-        social_link: socialLink.trim() || null,
+        social_link: finalSocial,
         photo_url: finalPhoto || null,
       }
 
@@ -151,17 +156,39 @@ function PositionModal({ unit, position, nextOrder, onClose, onSaved }: Position
           />
         </div>
 
-        <div>
-          <label className="block text-xs font-semibold text-slate-700 mb-1">
-            Tautan Media Sosial / LinkedIn (Opsional)
+        <div className="rounded-xl border border-slate-200 bg-slate-50/70 p-3 space-y-2.5">
+          <label className="block text-xs font-bold text-slate-800">
+            Tautan Profil / Medsos / Kontak (Opsional)
           </label>
-          <input
-            type="url"
-            placeholder="https://linkedin.com/in/username"
-            value={socialLink}
-            onChange={(e) => setSocialLink(e.target.value)}
-            className={inputCls}
-          />
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div>
+              <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                Nama / Judul Tombol
+              </label>
+              <input
+                type="text"
+                placeholder="Misal: Instagram / LinkedIn / CV"
+                value={socialLabel}
+                onChange={(e) => setSocialLabel(e.target.value)}
+                className={inputCls}
+              />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                Alamat URL / Tautan
+              </label>
+              <input
+                type="text"
+                placeholder="https://instagram.com/username atau linkedin.com/in/..."
+                value={socialUrl}
+                onChange={(e) => setSocialUrl(e.target.value)}
+                className={inputCls}
+              />
+            </div>
+          </div>
+          <p className="text-[10px] text-slate-400">
+            Nama tombol bebas diisi (contoh: "Instagram", "LinkedIn", "Portofolio", atau "Profil Pengurus").
+          </p>
         </div>
 
         <div className="space-y-3">
@@ -393,9 +420,20 @@ export default function AdminStructure() {
                   </span>
                   <RoleBadge title={pos.title} variant="navy" />
                 </div>
-                {pos.subtitle && (
-                  <p className="truncate text-xs text-slate-500 mt-0.5">{pos.subtitle}</p>
-                )}
+                <div className="flex flex-wrap items-center gap-2 mt-0.5">
+                  {pos.subtitle && (
+                    <span className="truncate text-xs text-slate-500">{pos.subtitle}</span>
+                  )}
+                  {pos.social_link && (() => {
+                    const s = parseSocialLink(pos.social_link)
+                    if (!s) return null
+                    return (
+                      <span className="inline-flex items-center gap-1 rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700 ring-1 ring-blue-100">
+                        🔗 {s.label}
+                      </span>
+                    )
+                  })()}
+                </div>
               </div>
             </div>
 
