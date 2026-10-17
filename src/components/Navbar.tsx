@@ -40,7 +40,7 @@ export default function Navbar() {
               {settings.org_name}
             </span>
             <span className="block text-xs font-semibold text-yellow-400/90 line-clamp-1">
-              {settings.cabinet_name} — Ya’ahowu!
+              {settings.cabinet_name}
             </span>
           </div>
         </Link>

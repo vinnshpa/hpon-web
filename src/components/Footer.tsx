@@ -21,7 +21,7 @@ export default function Footer() {
                   {settings.org_name}
                 </h3>
                 <p className="text-xs text-yellow-400 font-bold tracking-wider">
-                  {settings.cabinet_name} — Ya’ahowu!
+                  {settings.cabinet_name}
                 </p>
               </div>
             </div>

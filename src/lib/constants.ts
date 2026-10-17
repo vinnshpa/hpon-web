@@ -42,7 +42,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     name: 'Ketua Umum BPH',
     title: 'Ketua Umum BPH',
     quote:
-      'Haga Pendidikan Ono Niha lahir dari komitmen suci bahwa tidak boleh ada putra-putri Nias yang terhenti cita-citanya meraih perguruan tinggi hanya karena keterbatasan informasi dan akses. Bersama kita kawal generasi Ono Niha menuju masa depan gilang-gemilang. Ya’ahowu!',
+      'Haga Pendidikan Ono Niha lahir dari komitmen suci bahwa tidak boleh ada putra-putri Nias yang terhenti cita-citanya meraih perguruan tinggi hanya karena keterbatasan informasi dan akses. Bersama kita kawal generasi Ono Niha menuju masa depan gilang-gemilang.',
     photo_url: '',
   },
   contact_info: {

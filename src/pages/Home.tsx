@@ -71,7 +71,7 @@ export default function Home() {
 
           <div className="inline-flex items-center gap-2 rounded-full bg-yellow-400/15 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-yellow-400 ring-1 ring-yellow-400/40 shadow-xs">
             <Sparkles className="h-3.5 w-3.5" />
-            {settings.cabinet_name} — Ya’ahowu!
+            {settings.cabinet_name}
           </div>
 
           <h1 className="mt-6 text-3xl font-black tracking-tight sm:text-6xl text-white">
