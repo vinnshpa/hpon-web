@@ -28,6 +28,11 @@ export default function AdminSiteSettings() {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // Sinkronkan form saat data terbaru selesai diambil dari database
+  useEffect(() => {
+    setForm(settings)
+  }, [settings])
+
   const handleSave = async (e: FormEvent) => {
     e.preventDefault()
     setSaving(true)
