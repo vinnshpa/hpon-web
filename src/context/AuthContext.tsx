@@ -14,7 +14,16 @@ const AuthContext = createContext<AuthState | null>(null)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [initialized, setInitialized] = useState(false)
-  const [isAdmin, setIsAdmin] = useState(false)
+  
+  // Baca status admin dari cache lokal agar tidak ada kedipan (flicker) tombol saat refresh
+  const [isAdmin, setIsAdmin] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('hpon_is_admin') === 'true'
+    } catch {
+      return false
+    }
+  })
+  
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -31,6 +40,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s)
+      if (!s) {
+        setIsAdmin(false)
+        try { localStorage.removeItem('hpon_is_admin') } catch {}
+      }
     })
 
     return () => sub.subscription.unsubscribe()
@@ -40,11 +53,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!initialized) return
     if (!session) {
       setIsAdmin(false)
+      try { localStorage.removeItem('hpon_is_admin') } catch {}
       setLoading(false)
       return
     }
 
-    setLoading(true)
     supabase
       .from('admin_users')
       .select('user_id')
@@ -53,18 +66,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .then(({ data, error }) => {
         if (!error && data) {
           setIsAdmin(true)
+          try { localStorage.setItem('hpon_is_admin', 'true') } catch {}
         } else {
           setIsAdmin(false)
+          try { localStorage.removeItem('hpon_is_admin') } catch {}
         }
         setLoading(false)
       })
       .catch(() => {
         setIsAdmin(false)
+        try { localStorage.removeItem('hpon_is_admin') } catch {}
         setLoading(false)
       })
   }, [session, initialized])
 
   const signOut = async () => {
+    try { localStorage.removeItem('hpon_is_admin') } catch {}
     if (isSupabaseConfigured) {
       await supabase.auth.signOut()
     }

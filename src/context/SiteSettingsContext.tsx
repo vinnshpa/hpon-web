@@ -16,13 +16,26 @@ const SiteSettingsContext = createContext<SiteSettingsState>({
 })
 
 export function SiteSettingsProvider({ children }: { children: ReactNode }) {
-  const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS)
+  // Ambil dari cache lokal secara instan saat pertama kali render agar tidak ada kedipan tampilan lama
+  const [settings, setSettings] = useState<SiteSettings>(() => {
+    try {
+      const cached = localStorage.getItem('hpon_site_settings')
+      if (cached) {
+        return { ...DEFAULT_SETTINGS, ...JSON.parse(cached) }
+      }
+    } catch {}
+    return DEFAULT_SETTINGS
+  })
+  
   const [loading, setLoading] = useState(true)
 
   const refreshSettings = async () => {
     try {
       const data = await fetchSiteSettings()
       setSettings(data)
+      try {
+        localStorage.setItem('hpon_site_settings', JSON.stringify(data))
+      } catch {}
     } finally {
       setLoading(false)
     }
