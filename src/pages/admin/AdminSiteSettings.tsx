@@ -1,6 +1,7 @@
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, type FormEvent } from 'react'
 import { useSiteSettings } from '../../context/SiteSettingsContext'
 import { updateSiteSettings, uploadFile } from '../../lib/api'
+import { DEFAULT_SETTINGS } from '../../lib/constants'
 import { btnGhost, btnPrimary, card, inputCls } from '../../lib/ui'
 import ErrorBox from '../../components/ErrorBox'
 import Avatar from '../../components/Avatar'
@@ -22,7 +23,25 @@ import type { SiteSettings } from '../../types'
 export default function AdminSiteSettings() {
   const { settings, refreshSettings } = useSiteSettings()
 
-  const [form, setForm] = useState<SiteSettings>(settings)
+  // Helper untuk memastikan tidak ada property yang bernilai null/undefined
+  const normalizeSettings = (s: Partial<SiteSettings>): SiteSettings => ({
+    ...DEFAULT_SETTINGS,
+    ...s,
+    leader_welcome: {
+      ...DEFAULT_SETTINGS.leader_welcome,
+      ...(s?.leader_welcome || {}),
+    },
+    contact_info: {
+      ...DEFAULT_SETTINGS.contact_info,
+      ...(s?.contact_info || {}),
+    },
+    stats: s?.stats?.length ? s.stats : DEFAULT_SETTINGS.stats,
+    missions: s?.missions?.length ? s.missions : DEFAULT_SETTINGS.missions,
+    pillars: s?.pillars?.length ? s.pillars : DEFAULT_SETTINGS.pillars,
+    documents: s?.documents?.length ? s.documents : DEFAULT_SETTINGS.documents,
+  })
+
+  const [form, setForm] = useState<SiteSettings>(() => normalizeSettings(settings))
   const [leaderPhoto, setLeaderPhoto] = useState<File | null>(null)
   const [saving, setSaving] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -30,7 +49,9 @@ export default function AdminSiteSettings() {
 
   // Sinkronkan form saat data terbaru selesai diambil dari database
   useEffect(() => {
-    setForm(settings)
+    if (settings) {
+      setForm(normalizeSettings(settings))
+    }
   }, [settings])
 
   const handleSave = async (e: FormEvent) => {
@@ -40,7 +61,7 @@ export default function AdminSiteSettings() {
     setSuccess(false)
 
     try {
-      let leaderPhotoUrl = form.leader_welcome.photo_url
+      let leaderPhotoUrl = form.leader_welcome?.photo_url || ''
 
       // Jika ada file foto ketua umum baru diunggah
       if (leaderPhoto) {
@@ -135,8 +156,8 @@ export default function AdminSiteSettings() {
           <h2 className="text-2xl font-extrabold text-blue-950">
             Pengaturan Website & Konten CMS
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500">
-            Seluruh teks, visi-misi, sambutan ketua umum, dan kontak dapat diperbarui langsung dari sini.
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            Seluruh teks profil, visi-misi, sambutan ketua umum, dan kontak dapat diperbarui langsung dari sini.
           </p>
         </div>
 
@@ -174,7 +195,7 @@ export default function AdminSiteSettings() {
             <input
               type="text"
               required
-              value={form.org_name}
+              value={form.org_name || ''}
               onChange={(e) => setForm({ ...form, org_name: e.target.value })}
               className={inputCls}
             />
@@ -188,7 +209,7 @@ export default function AdminSiteSettings() {
               type="text"
               required
               placeholder="Contoh: Kabinet Sinergi Progresif 2024–2025"
-              value={form.cabinet_name}
+              value={form.cabinet_name || ''}
               onChange={(e) => setForm({ ...form, cabinet_name: e.target.value })}
               className={inputCls}
             />
@@ -202,7 +223,7 @@ export default function AdminSiteSettings() {
           <input
             type="text"
             required
-            value={form.org_tagline}
+            value={form.org_tagline || ''}
             onChange={(e) => setForm({ ...form, org_tagline: e.target.value })}
             className={inputCls}
           />
@@ -220,8 +241,8 @@ export default function AdminSiteSettings() {
           <div className="space-y-3 text-center sm:text-left">
             <label className="block text-xs font-semibold text-slate-700">Foto Ketua Umum</label>
             <Avatar
-              name={form.leader_welcome.name}
-              url={leaderPhoto ? URL.createObjectURL(leaderPhoto) : form.leader_welcome.photo_url}
+              name={form.leader_welcome?.name || 'Ketua Umum'}
+              url={leaderPhoto ? URL.createObjectURL(leaderPhoto) : (form.leader_welcome?.photo_url || null)}
               className="h-28 w-28 mx-auto sm:mx-0 ring-4 ring-yellow-400/50"
             />
             <input
@@ -240,7 +261,7 @@ export default function AdminSiteSettings() {
                 <label className="block text-xs font-semibold text-slate-700 mb-1">Nama Ketua Umum</label>
                 <input
                   type="text"
-                  value={form.leader_welcome.name}
+                  value={form.leader_welcome?.name || ''}
                   onChange={(e) =>
                     setForm({
                       ...form,
@@ -255,7 +276,7 @@ export default function AdminSiteSettings() {
                 <label className="block text-xs font-semibold text-slate-700 mb-1">Jabatan / Gelar</label>
                 <input
                   type="text"
-                  value={form.leader_welcome.title}
+                  value={form.leader_welcome?.title || ''}
                   onChange={(e) =>
                     setForm({
                       ...form,
@@ -271,7 +292,7 @@ export default function AdminSiteSettings() {
               <label className="block text-xs font-semibold text-slate-700 mb-1">Isi Kutipan / Sambutan Singkat</label>
               <textarea
                 rows={3}
-                value={form.leader_welcome.quote}
+                value={form.leader_welcome?.quote || ''}
                 onChange={(e) =>
                   setForm({
                     ...form,
@@ -298,7 +319,7 @@ export default function AdminSiteSettings() {
           </label>
           <textarea
             rows={4}
-            value={form.about_text}
+            value={form.about_text || ''}
             onChange={(e) => setForm({ ...form, about_text: e.target.value })}
             className={inputCls}
           />
@@ -310,7 +331,7 @@ export default function AdminSiteSettings() {
           </label>
           <textarea
             rows={2}
-            value={form.vision}
+            value={form.vision || ''}
             onChange={(e) => setForm({ ...form, vision: e.target.value })}
             className={inputCls}
           />
@@ -379,7 +400,7 @@ export default function AdminSiteSettings() {
               />
               <input
                 type="text"
-                placeholder="Keterangan (mis: Kader)"
+                placeholder="Keterangan (mis: Pelajar)"
                 value={stat.label}
                 onChange={(e) => handleUpdateStat(i, 'label', e.target.value)}
                 className={inputCls}
@@ -403,7 +424,7 @@ export default function AdminSiteSettings() {
             </label>
             <input
               type="text"
-              value={form.contact_info.whatsapp}
+              value={form.contact_info?.whatsapp || ''}
               onChange={(e) =>
                 setForm({
                   ...form,
@@ -420,7 +441,7 @@ export default function AdminSiteSettings() {
             </label>
             <input
               type="email"
-              value={form.contact_info.email}
+              value={form.contact_info?.email || ''}
               onChange={(e) =>
                 setForm({
                   ...form,
@@ -435,11 +456,11 @@ export default function AdminSiteSettings() {
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Akun Instagram (Contoh: @organisasi_official)
+              Akun Instagram (Contoh: @hpon_official)
             </label>
             <input
               type="text"
-              value={form.contact_info.instagram}
+              value={form.contact_info?.instagram || ''}
               onChange={(e) =>
                 setForm({
                   ...form,
@@ -456,7 +477,7 @@ export default function AdminSiteSettings() {
             </label>
             <input
               type="text"
-              value={form.contact_info.address}
+              value={form.contact_info?.address || ''}
               onChange={(e) =>
                 setForm({
                   ...form,
@@ -475,7 +496,7 @@ export default function AdminSiteSettings() {
           <input
             type="text"
             placeholder="https://www.google.com/maps/embed?pb=..."
-            value={form.contact_info.maps_embed_url}
+            value={form.contact_info?.maps_embed_url || ''}
             onChange={(e) =>
               setForm({
                 ...form,
