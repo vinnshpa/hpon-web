@@ -14,6 +14,45 @@ import {
 } from 'lucide-react'
 import { InstagramIcon } from '../components/Icons'
 
+/**
+ * Konversi otomatis berbagai format URL Google Maps menjadi URL Embed yang valid untuk <iframe>.
+ * Mencegah error "www.google.com menolak untuk terhubung".
+ */
+export function formatMapEmbedUrl(rawUrl?: string): string {
+  if (!rawUrl) return ''
+  const trimmed = rawUrl.trim()
+
+  // 1. Ekstrak src jika pengguna menempelkan tag lengkap <iframe src="...">
+  const matchIframe = trimmed.match(/src=["'](.*?)["']/)
+  if (matchIframe && matchIframe[1]) return matchIframe[1]
+
+  // 2. Jika sudah berformat embed resmi
+  if (trimmed.includes('/maps/embed') || trimmed.includes('output=embed')) {
+    return trimmed
+  }
+
+  // 3. Khusus shortlink Bimbel Ono Niha Dream (OND) Nias
+  if (trimmed.includes('f25KZmt81T4QCKvF6') || trimmed.toLowerCase().includes('ono niha dream')) {
+    return 'https://maps.google.com/maps?q=1.2554408,97.6383986&hl=id&z=16&output=embed'
+  }
+
+  // 4. Deteksi koordinat @lat,lng di URL
+  const matchCoords = trimmed.match(/@(-?\d+\.\d+),(-?\d+\.\d+)/)
+  if (matchCoords) {
+    return `https://maps.google.com/maps?q=${matchCoords[1]},${matchCoords[2]}&hl=id&z=16&output=embed`
+  }
+
+  // 5. Deteksi nama tempat di /place/...
+  const matchPlace = trimmed.match(/maps\/place\/([^/@?]+)/)
+  if (matchPlace) {
+    const place = decodeURIComponent(matchPlace[1].replace(/\+/g, ' '))
+    return `https://maps.google.com/maps?q=${encodeURIComponent(place)}&hl=id&z=16&output=embed`
+  }
+
+  // 6. Fallback cerdas untuk query pencarian lokasi
+  return `https://maps.google.com/maps?q=${encodeURIComponent(trimmed)}&hl=id&z=16&output=embed`
+}
+
 export default function Contact() {
   const { settings } = useSiteSettings()
 
@@ -44,7 +83,9 @@ export default function Contact() {
     }
   }
 
-  const rawWa = settings.contact_info.whatsapp?.replace(/\D/g, '') || ''
+  const rawWa = settings.contact_info?.whatsapp?.replace(/\D/g, '') || ''
+  const mapsRaw = settings.contact_info?.maps_embed_url || ''
+  const mapsEmbed = formatMapEmbedUrl(mapsRaw)
 
   return (
     <div>
@@ -72,7 +113,9 @@ export default function Contact() {
                       Alamat Sekretariat
                     </span>
                     <span className="font-medium text-slate-800">
-                      {settings.contact_info.address}
+                      {settings.contact_info?.address && settings.contact_info.address !== '-'
+                        ? settings.contact_info.address
+                        : 'Kepulauan Nias & Sekretariat Penghubung Medan, Sumatera Utara'}
                     </span>
                   </div>
                 </li>
@@ -86,10 +129,10 @@ export default function Contact() {
                       Email Resmi
                     </span>
                     <a
-                      href={`mailto:${settings.contact_info.email}`}
+                      href={`mailto:${settings.contact_info?.email || 'sekretariat@hpon.org'}`}
                       className="font-medium text-blue-950 hover:text-yellow-600 transition underline"
                     >
-                      {settings.contact_info.email}
+                      {settings.contact_info?.email || 'sekretariat@hpon.org'}
                     </a>
                   </div>
                 </li>
@@ -103,12 +146,12 @@ export default function Contact() {
                       WhatsApp Humas
                     </span>
                     <span className="font-medium text-slate-800">
-                      {settings.contact_info.whatsapp}
+                      {settings.contact_info?.whatsapp || '+6281234567890'}
                     </span>
                   </div>
                 </li>
 
-                {settings.contact_info.instagram && (
+                {settings.contact_info?.instagram && (
                   <li className="flex items-start gap-3">
                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-950 text-yellow-400">
                       <InstagramIcon className="h-5 w-5" />
@@ -143,16 +186,33 @@ export default function Contact() {
               )}
             </div>
 
-            {/* Google Maps Embed */}
-            {settings.contact_info.maps_embed_url && (
-              <div className="overflow-hidden rounded-2xl ring-1 ring-slate-200 shadow-sm h-64 sm:h-80">
-                <iframe
-                  title="Peta Lokasi Sekretariat"
-                  src={settings.contact_info.maps_embed_url}
-                  className="h-full w-full border-0"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
+            {/* Google Maps Embed dengan Fallback Smart Converter */}
+            {mapsEmbed && (
+              <div className={`${card} overflow-hidden`}>
+                <div className="h-64 sm:h-80 w-full bg-slate-100">
+                  <iframe
+                    title="Peta Lokasi Sekretariat"
+                    src={mapsEmbed}
+                    className="h-full w-full border-0"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+                <div className="flex items-center justify-between p-3 bg-slate-50 border-t border-slate-200 text-xs text-slate-600">
+                  <span className="flex items-center gap-1.5 font-semibold text-slate-800">
+                    <MapPin className="h-4 w-4 text-yellow-600" />
+                    Lokasi Sekretariat HPON
+                  </span>
+                  <a
+                    href={mapsRaw || mapsEmbed}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 font-bold text-blue-950 hover:text-yellow-600 transition"
+                  >
+                    Buka di Aplikasi Google Maps
+                    <ExternalLink className="h-3.5 w-3.5" />
+                  </a>
+                </div>
               </div>
             )}
           </div>
